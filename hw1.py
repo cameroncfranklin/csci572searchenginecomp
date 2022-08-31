@@ -11,7 +11,7 @@ class SearchEngine:
     @staticmethod
     def search(query, sleep=True):
         if sleep:  # Prevents loading too many pages too soon
-            time.sleep(randint(7, 35))
+            time.sleep(randint(5, 25))
         # for adding + between words for the query
         temp_url = '+'.join(query.split())
         url = 'https://www.duckduckgo.com/html/?q=' + temp_url
@@ -26,9 +26,10 @@ class SearchEngine:
         raw_results = soup.find_all("a", attrs={"class": "result__a"})
         results = []
     # implement a check to get only 10 results and also check that URLs must not be duplicated
-        for result in raw_results:
-            link = result.get('href')
-            results.append(link)
+        for result in range(0, 10):
+            if raw_results[result] not in results:
+                link = raw_results[result].get('href')
+                results.append(link)
         return results
 
 #############Driver code#############
