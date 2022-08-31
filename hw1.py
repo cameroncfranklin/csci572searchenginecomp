@@ -1,3 +1,4 @@
+import json
 import time
 from bs4 import BeautifulSoup
 import requests
@@ -18,15 +19,17 @@ class SearchEngine:
         soup = BeautifulSoup(requests.get(
             url, headers=USER_AGENT).text, "html.parser")
         new_results = SearchEngine.scrape_search_result(soup)
-
-        print(query, new_results)
+        return new_results
 
     @staticmethod
     def scrape_search_result(soup):
         raw_results = soup.find_all("a", attrs={"class": "result__a"})
         results = []
     # implement a check to get only 10 results and also check that URLs must not be duplicated
-        for result in range(0, 10):
+        limitResults = 10
+        if len(raw_results) < 10:
+            limitResults = len(raw_results)
+        for result in range(0, limitResults):
             if raw_results[result] not in results:
                 link = raw_results[result].get('href')
                 results.append(link)
@@ -38,10 +41,11 @@ class SearchEngine:
 def main():
     DuckDuckGo = SearchEngine()
     with open("/Users/Cameron/Desktop/Homework 2022/CSCI 572/100QueriesSet4.txt") as f:
-        lines = f.readlines()
-    # print(lines)
+        lines = f.read().splitlines()
+    data = {}
     for query in lines:
-        DuckDuckGo.search(query)
+        data[query] = DuckDuckGo.search(query)
+    # json_dump = json.dumps(data)
 
 
 if __name__ == '__main__':
