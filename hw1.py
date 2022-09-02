@@ -12,7 +12,7 @@ class SearchEngine:
     @staticmethod
     def search(query, sleep=True):
         if sleep:  # Prevents loading too many pages too soon
-            time.sleep(randint(5, 25))
+            time.sleep(randint(5, 10))
         # for adding + between words for the query
         temp_url = '+'.join(query.split())
         url = 'https://www.duckduckgo.com/html/?q=' + temp_url
@@ -44,8 +44,10 @@ def main():
         lines = f.read().splitlines()
     data = {}
     for query in lines:
-        data[query] = DuckDuckGo.search(query)
-    # json_dump = json.dumps(data)
+        data[query.rstrip()] = DuckDuckGo.search(query)
+    json_dump = json.dumps(data)
+    with open('hw1.json', 'w') as outfile:
+        outfile.write(json_dump)
 
 
 if __name__ == '__main__':
