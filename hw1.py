@@ -4,8 +4,12 @@ from bs4 import BeautifulSoup
 import requests
 from random import randint
 from html.parser import HTMLParser
+
 USER_AGENT = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'}
+with open("/Users/Cameron/Desktop/Homework 2022/CSCI 572/100QueriesSet4.txt") as f:
+    lines = f.read().splitlines()
+searchResults = {}
 
 
 class SearchEngine:
@@ -35,17 +39,19 @@ class SearchEngine:
                 results.append(link)
         return results
 
+
 #############Driver code#############
 
 
 def main():
     DuckDuckGo = SearchEngine()
-    with open("/Users/Cameron/Desktop/Homework 2022/CSCI 572/100QueriesSet4.txt") as f:
-        lines = f.read().splitlines()
-    data = {}
+    global searchResults
     for query in lines:
-        data[query.rstrip()] = DuckDuckGo.search(query)
-    json_dump = json.dumps(data)
+        searchResults[query.rstrip()] = DuckDuckGo.search(query)
+    for query in searchResults:
+        if query == []:
+            searchResults[query] = DuckDuckGo.search(query)
+    json_dump = json.dumps(searchResults)
     with open('hw1.json', 'w') as outfile:
         outfile.write(json_dump)
 

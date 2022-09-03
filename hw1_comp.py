@@ -63,7 +63,6 @@ def spearman_cofficient(data):
         sumCoefficient += table[column][3]
     avgCoefficient = sumCoefficient/100
     table.append(['Averages', avgOverlap, avgPercent, avgCoefficient])
-
     return table
 
 
