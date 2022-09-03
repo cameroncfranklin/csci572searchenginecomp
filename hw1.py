@@ -45,12 +45,10 @@ class SearchEngine:
 
 def main():
     DuckDuckGo = SearchEngine()
+    # May have to re-run several times and update global searchResults dict or update json output to get full results
     global searchResults
     for query in lines:
         searchResults[query.rstrip()] = DuckDuckGo.search(query)
-    # for query in searchResults:
-    #     if query == []:
-    #         searchResults[query] = DuckDuckGo.search(query)
     json_dump = json.dumps(searchResults)
     with open('hw1.json', 'w') as outfile:
         outfile.write(json_dump)

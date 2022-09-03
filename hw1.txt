@@ -1,1 +1,10 @@
-Based on the data I compiled, it appears that DuckDuckGo is [more effective/as effective/less effective] than Google.
+Based on the data I've compiled, it appears that DuckDuckGo is a less effective search engine than Google. The average Spearman coefficient 
+over all queries was -11.13 with an average percent overlap of 20%. The fact that the search result list produced a negative Spearman 
+coefficient clearly indicates that the overlapping results were (from this perspective) uncorrelated. And it points to their ranking algorithms 
+differing substantially when it comes to determine the relevance of results to the query. Futhermore, seeing as only a fifth of the results 
+overlapped, their really isn't much of a relationshp in the way the search engines gather top results either. If Google is the standard we're holding
+DuckDuckGo relative to, then based on this sample size (10 search results), DuckDuckGo does not quite perform as well as Google. Perhaps over 
+a larger result pool (say 50 or so) the Spearman coefficient could turn positive and the percent overlap would increase. Regardless, it is clear 
+from the data that the two search engines prioritize different ranking features.
+
+
