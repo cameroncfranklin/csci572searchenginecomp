@@ -1,3 +1,4 @@
+import csv
 import json
 
 
@@ -23,32 +24,47 @@ def findURLMatches(json1, json2):
 
 
 def spearman_cofficient(data):
+    res = []
+    query_id = 0
     for query in data:
+        res.append([query_id+1])
+        res[query_id].append(len(query))
+        res[query_id].append(len(query)/10)
+        query_id += 1
+        dsquares = []
         n = len(query)
         for match in query:
             d = match[0] - match[1]
             dsquare = d**2
-            if n == 1:
-                if match[0] == match[1]:
-                    coefficient = 1
-                else:
-                    coefficient = 0
+            dsquares.append(dsquare)
+        if n == 1 or n == 0:
+            if match[0] == match[1]:
+                coefficient = 1
+                res[query_id - 1].append(coefficient)
             else:
-                coefficient = 1 - 6*dsquare / (n * (n**2 - 1))
-            match.append(coefficient)
-    print(data)
+                coefficient = 0
+                res[query_id - 1].append(coefficient)
+        else:
+            coefficient = 1 - 6*sum(dsquares) / (n * (n**2 - 1))
+            res[query_id - 1].append(coefficient)
+    return res
 
 
-def avg_spearman_coefficent(ranking1, ranking2):
-    d = []
-    n = len(ranking1)
-    for rank in range(len(ranking1)):
-        d.append(ranking2[rank] - ranking1[rank])
-    dsquare = [x**2 for x in d]
-    dsquare_sigma = sum(dsquare)
-    coefficient = 1 - 6*dsquare_sigma / (n * (n**2 - 1))
-    return coefficient
+def write_csv(data, filename):
+    # file = open(path, 'w', encoding='UTF8', newline='')
+    fields = ['Queries', 'Number of Overlapping Results',
+              'Percent Overlap', 'Spearman Coefficient']
+    with open(filename, 'w') as csvfile:
+        # creating a csv writer object
+        csvwriter = csv.writer(csvfile)
+
+        # writing the fields
+        csvwriter.writerow(fields)
+
+        # writing the data rows
+        csvwriter.writerows(data)
 
 
 results = findURLMatches(duckduckgo_json, google_json)
-spearman_cofficient(results)
+res = spearman_cofficient(results)
+write_csv(res, 'hw1.csv')
