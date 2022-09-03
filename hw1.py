@@ -48,9 +48,9 @@ def main():
     global searchResults
     for query in lines:
         searchResults[query.rstrip()] = DuckDuckGo.search(query)
-    for query in searchResults:
-        if query == []:
-            searchResults[query] = DuckDuckGo.search(query)
+    # for query in searchResults:
+    #     if query == []:
+    #         searchResults[query] = DuckDuckGo.search(query)
     json_dump = json.dumps(searchResults)
     with open('hw1.json', 'w') as outfile:
         outfile.write(json_dump)
