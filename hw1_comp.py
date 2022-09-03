@@ -63,7 +63,7 @@ def spearman_cofficient(data):
         sumCoefficient += table[column][3]
     avgCoefficient = sumCoefficient/100
     table.append(['Averages', avgOverlap, avgPercent, avgCoefficient])
-    
+
     return table
 
 
@@ -82,6 +82,13 @@ def write_csv(data, filename):
         csvwriter.writerows(data)
 
 
-results = findURLMatches(duckduckgo_json, google_json)
-res = spearman_cofficient(results)
-write_csv(res, 'hw1.csv')
+#############Driver code#############
+
+def main():
+    overlapData = findURLMatches(duckduckgo_json, google_json)
+    results = spearman_cofficient(overlapData)
+    write_csv(results, 'hw1.csv')
+
+
+if __name__ == '__main__':
+    main()
