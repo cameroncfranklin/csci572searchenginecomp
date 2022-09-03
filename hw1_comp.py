@@ -1,3 +1,5 @@
+from typing import SupportsComplex
+import numpy as np
 import csv
 import json
 
@@ -47,6 +49,18 @@ def spearman_cofficient(data):
         else:
             coefficient = 1 - 6*sum(dsquares) / (n * (n**2 - 1))
             res[query_id - 1].append(coefficient)
+    avgOverlap, avgPercent, avgCoefficient, overlapSum, sumPercent, sumCoefficient = 0, 0, 0, 0, 0, 0
+
+    for column in range(100):
+        overlapSum += res[column][1]
+    avgOverlap = overlapSum/100
+    for column in range(100):
+        sumPercent += res[column][2]
+    avgPercent = sumPercent/100
+    for column in range(100):
+        sumCoefficient += res[column][3]
+    avgCoefficient = sumCoefficient/100
+    res.append(['Averages', avgOverlap, avgPercent, avgCoefficient])
     return res
 
 
