@@ -3,7 +3,7 @@ import numpy as np
 import csv
 import json
 
-
+# Pre-processing data
 duckduckgoResults = open(
     '/Users/Cameron/Desktop/Homework 2022/CSCI 572/hw1.json')
 duckduckgo_json = json.load(duckduckgoResults)
@@ -26,12 +26,12 @@ def findURLMatches(json1, json2):
 
 
 def spearman_cofficient(data):
-    res = []
+    table = []
     query_id = 0
     for query in data:
-        res.append([query_id+1])
-        res[query_id].append(len(query))
-        res[query_id].append(len(query)/10)
+        table.append([query_id+1])
+        table[query_id].append(len(query))
+        table[query_id].append(len(query)/10)
         query_id += 1
         dsquares = []
         n = len(query)
@@ -42,26 +42,29 @@ def spearman_cofficient(data):
         if n == 1 or n == 0:
             if match[0] == match[1]:
                 coefficient = 1
-                res[query_id - 1].append(coefficient)
+                table[query_id - 1].append(coefficient)
             else:
                 coefficient = 0
-                res[query_id - 1].append(coefficient)
+                table[query_id - 1].append(coefficient)
         else:
             coefficient = 1 - 6*sum(dsquares) / (n * (n**2 - 1))
-            res[query_id - 1].append(coefficient)
+            table[query_id - 1].append(coefficient)
+
+    # Calculate averages
     avgOverlap, avgPercent, avgCoefficient, overlapSum, sumPercent, sumCoefficient = 0, 0, 0, 0, 0, 0
 
     for column in range(100):
-        overlapSum += res[column][1]
+        overlapSum += table[column][1]
     avgOverlap = overlapSum/100
     for column in range(100):
-        sumPercent += res[column][2]
+        sumPercent += table[column][2]
     avgPercent = sumPercent/100
     for column in range(100):
-        sumCoefficient += res[column][3]
+        sumCoefficient += table[column][3]
     avgCoefficient = sumCoefficient/100
-    res.append(['Averages', avgOverlap, avgPercent, avgCoefficient])
-    return res
+    table.append(['Averages', avgOverlap, avgPercent, avgCoefficient])
+    
+    return table
 
 
 def write_csv(data, filename):
