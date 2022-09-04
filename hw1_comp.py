@@ -32,7 +32,7 @@ def spearman_cofficient(data):
     for query in data:
         table.append([query_id+1])
         table[query_id].append(len(query))
-        table[query_id].append(len(query)/10 * 100.0)
+        table[query_id].append(format(len(query)/10 * 100.0, '.1f'))
         query_id += 1
         dsquares = []
         n = len(query)
@@ -58,7 +58,7 @@ def spearman_cofficient(data):
         overlapSum += table[column][1]
     avgOverlap = overlapSum/100
     for column in range(100):
-        sumPercent += table[column][2]
+        sumPercent += int(float(table[column][2]))
     avgPercent = sumPercent/100
     for column in range(100):
         sumCoefficient += table[column][3]
