@@ -1,3 +1,4 @@
+from decimal import Decimal
 from typing import SupportsComplex
 import numpy as np
 import csv
@@ -31,7 +32,7 @@ def spearman_cofficient(data):
     for query in data:
         table.append([query_id+1])
         table[query_id].append(len(query))
-        table[query_id].append(len(query)/10)
+        table[query_id].append(len(query)/10 * 100.0)
         query_id += 1
         dsquares = []
         n = len(query)
@@ -61,7 +62,7 @@ def spearman_cofficient(data):
     avgPercent = sumPercent/100
     for column in range(100):
         sumCoefficient += table[column][3]
-    avgCoefficient = sumCoefficient/100
+    avgCoefficient = sumCoefficient/100 * 100.0
     table.append(['Averages', avgOverlap, avgPercent, avgCoefficient])
     return table
 
